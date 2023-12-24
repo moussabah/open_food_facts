@@ -1,0 +1,72 @@
+<Schema name="OFF">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Produit">
+    <Hierarchy name="product_hierarchy" visible="true" hasAll="true" allMemberName="Tous produits" primaryKey="num_seq_produit">
+      <Table name="produit_dim_table">
+      </Table>
+      <Level name="Produit" visible="true" column="barcode" nameColumn="product_name" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time" caption="Date Version">
+    <Hierarchy name="date_hierarchy" visible="true" hasAll="true" allMemberName="Tous Dates" primaryKey="num_seq_date">
+      <Table name="date_dim_table">
+      </Table>
+      <Level name="Year" visible="true" column="year" nameColumn="year" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Month" visible="true" column="month" nameColumn="month" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Contributeur">
+    <Hierarchy name="contributeur_hierachy" visible="true" hasAll="true" allMemberName="Tous contributors" primaryKey="num_seq_contributeur">
+      <Table name="contributeur_dim_table" alias="">
+      </Table>
+      <Level name="Contributeur" visible="true" column="pseudo" nameColumn="pseudo" type="String" uniqueMembers="true" levelType="Regular">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Product_Version_Facts" visible="true" cache="true" enabled="true">
+    <Table name="product_version_fact_table">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="num_seq_pnns" highCardinality="false" name="Pnns">
+      <Hierarchy name="pnns_dim" visible="true" hasAll="true" allMemberName="Tous pnns" primaryKey="num_seq_pnns">
+        <Table name="pnns_dim_table">
+        </Table>
+        <Level name="Pnns1" visible="true" column="pnns1" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Pnns2" visible="true" column="pnns2" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="num_seq_nutriscore" highCardinality="false" name="Nutriscore">
+      <Hierarchy name="nutriscore_dim" visible="true" hasAll="true" allMemberName="Toutes nutriscore" primaryKey="num_seq_nutriscore">
+        <Table name="nutriscore_dim_table">
+        </Table>
+        <Level name="Nutriscore" visible="true" column="nutriscore_lettre" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+          <Property name="nutrition_score_fr" column="nutrition_score_fr" type="Numeric">
+          </Property>
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur">
+    </DimensionUsage>
+    <DimensionUsage source="Time" name="Date_Modification" visible="true" foreignKey="num_seq_date_modification">
+    </DimensionUsage>
+    <Measure name="Nombre de version par produit" column="nombre_de_version" datatype="Integer" aggregator="count">
+    </Measure>
+  </Cube>
+  <Cube name="Product_Fact" visible="true" cache="true" enabled="true">
+    <Table name="nombre_produit_table">
+    </Table>
+    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur">
+    </DimensionUsage>
+    <DimensionUsage source="Time" name="Date_Creation" visible="true" foreignKey="date_creation">
+    </DimensionUsage>
+    <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit">
+    </DimensionUsage>
+    <Measure name="Nombre de produit" column="nombre_de_produit" aggregator="count">
+    </Measure>
+  </Cube>
+</Schema>
