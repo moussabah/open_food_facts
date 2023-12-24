@@ -17,11 +17,11 @@
       </Level>
     </Hierarchy>
   </Dimension>
-  <Dimension type="StandardDimension" visible="true" name="Contributeur">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Contributeur">
     <Hierarchy name="contributeur_hierachy" visible="true" hasAll="true" allMemberName="Tous contributors" primaryKey="num_seq_contributeur">
-      <Table name="contributeur_dim_table" alias="">
+      <Table name="contributeur_dim_table">
       </Table>
-      <Level name="Contributeur" visible="true" column="pseudo" nameColumn="pseudo" type="String" uniqueMembers="true" levelType="Regular">
+      <Level name="Contributeur" visible="true" column="pseudo" nameColumn="pseudo" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
@@ -50,21 +50,21 @@
     </Dimension>
     <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur">
+    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="Time" name="Date_Modification" visible="true" foreignKey="num_seq_date_modification">
+    <DimensionUsage source="Time" name="Date_Modification" visible="true" foreignKey="num_seq_date_modification" highCardinality="false">
     </DimensionUsage>
     <Measure name="Nombre de version par produit" column="nombre_de_version" datatype="Integer" aggregator="count">
     </Measure>
   </Cube>
-  <Cube name="Product_Fact" visible="true" cache="true" enabled="true">
+  <Cube name="Product_Facts" visible="true" cache="true" enabled="true">
     <Table name="nombre_produit_table">
     </Table>
-    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur">
+    <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="Time" name="Date_Creation" visible="true" foreignKey="date_creation">
+    <DimensionUsage source="Time" name="Date_Creation" visible="true" foreignKey="date_creation" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit">
+    <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit" highCardinality="false">
     </DimensionUsage>
     <Measure name="Nombre de produit" column="nombre_de_produit" aggregator="count">
     </Measure>
