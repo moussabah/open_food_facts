@@ -3,6 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
+-- Généré le : Dim 24 déc. 2023 à 00:56
+-- Version du serveur :  8.0.25
+-- Version de PHP : 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -131,6 +134,24 @@ ALTER TABLE `pnns_dim_table`
   ADD PRIMARY KEY (`num_seq_pnns`);
 
 --
+-- Index pour la table `product_facts_table`
+--
+ALTER TABLE `product_facts_table`
+  ADD KEY `num_seq_contributeur` (`num_seq_contributeur`),
+  ADD KEY `num_seq_date_creation` (`num_seq_date_creation`),
+  ADD KEY `num_seq_produit` (`num_seq_produit`);
+
+--
+-- Index pour la table `product_version_fact_table`
+--
+ALTER TABLE `product_version_fact_table`
+  ADD KEY `num_seq_contributeur` (`num_seq_contributeur`),
+  ADD KEY `num_seq_date_modification` (`num_seq_date_modification`),
+  ADD KEY `num_seq_nutriscore` (`num_seq_nutriscore`),
+  ADD KEY `num_seq_pnns` (`num_seq_pnns`),
+  ADD KEY `num_seq_produit` (`num_seq_produit`);
+
+--
 -- Index pour la table `produit_dim_table`
 --
 ALTER TABLE `produit_dim_table`
@@ -169,6 +190,28 @@ ALTER TABLE `pnns_dim_table`
 --
 ALTER TABLE `produit_dim_table`
   MODIFY `num_seq_produit` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `product_facts_table`
+--
+ALTER TABLE `product_facts_table`
+  ADD CONSTRAINT `product_facts_table_ibfk_1` FOREIGN KEY (`num_seq_contributeur`) REFERENCES `contributeur_dim_table` (`num_seq_contributeur`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_facts_table_ibfk_2` FOREIGN KEY (`num_seq_date_creation`) REFERENCES `date_dim_table` (`num_seq_date`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_facts_table_ibfk_3` FOREIGN KEY (`num_seq_produit`) REFERENCES `produit_dim_table` (`num_seq_produit`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Contraintes pour la table `product_version_fact_table`
+--
+ALTER TABLE `product_version_fact_table`
+  ADD CONSTRAINT `product_version_fact_table_ibfk_1` FOREIGN KEY (`num_seq_contributeur`) REFERENCES `contributeur_dim_table` (`num_seq_contributeur`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_version_fact_table_ibfk_2` FOREIGN KEY (`num_seq_date_modification`) REFERENCES `date_dim_table` (`num_seq_date`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_version_fact_table_ibfk_3` FOREIGN KEY (`num_seq_nutriscore`) REFERENCES `nutriscore_dim_table` (`num_seq_nutiscore`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_version_fact_table_ibfk_4` FOREIGN KEY (`num_seq_pnns`) REFERENCES `pnns_dim_table` (`num_seq_pnns`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_version_fact_table_ibfk_5` FOREIGN KEY (`num_seq_produit`) REFERENCES `produit_dim_table` (`num_seq_produit`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
