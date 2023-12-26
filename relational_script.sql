@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : Dim 24 déc. 2023 à 00:56
+-- Généré le : mar. 26 déc. 2023 à 22:28
 -- Version du serveur :  8.0.25
 -- Version de PHP : 7.2.24
 
@@ -51,7 +51,7 @@ CREATE TABLE `date_dim_table` (
 --
 
 CREATE TABLE `nutriscore_dim_table` (
-  `num_seq_nutiscore` int NOT NULL,
+  `num_seq_nutriscore` int NOT NULL,
   `nutriscore_lettre` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -76,7 +76,8 @@ CREATE TABLE `pnns_dim_table` (
 CREATE TABLE `product_facts_table` (
   `num_seq_produit` int NOT NULL,
   `num_seq_contributeur` int NOT NULL,
-  `num_seq_date_creation` int NOT NULL
+  `num_seq_date_creation` int NOT NULL,
+  `nombre_produits` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -90,7 +91,8 @@ CREATE TABLE `product_version_fact_table` (
   `num_seq_nutriscore` int NOT NULL,
   `num_seq_date_modification` int NOT NULL,
   `num_seq_contributeur` int NOT NULL,
-  `num_seq_produit` int NOT NULL
+  `num_seq_produit` int NOT NULL,
+  `nombre_versions` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -125,7 +127,7 @@ ALTER TABLE `date_dim_table`
 -- Index pour la table `nutriscore_dim_table`
 --
 ALTER TABLE `nutriscore_dim_table`
-  ADD PRIMARY KEY (`num_seq_nutiscore`);
+  ADD PRIMARY KEY (`num_seq_nutriscore`);
 
 --
 -- Index pour la table `pnns_dim_table`
@@ -177,7 +179,7 @@ ALTER TABLE `date_dim_table`
 -- AUTO_INCREMENT pour la table `nutriscore_dim_table`
 --
 ALTER TABLE `nutriscore_dim_table`
-  MODIFY `num_seq_nutiscore` int NOT NULL AUTO_INCREMENT;
+  MODIFY `num_seq_nutriscore` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `pnns_dim_table`
@@ -209,7 +211,7 @@ ALTER TABLE `product_facts_table`
 ALTER TABLE `product_version_fact_table`
   ADD CONSTRAINT `product_version_fact_table_ibfk_1` FOREIGN KEY (`num_seq_contributeur`) REFERENCES `contributeur_dim_table` (`num_seq_contributeur`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `product_version_fact_table_ibfk_2` FOREIGN KEY (`num_seq_date_modification`) REFERENCES `date_dim_table` (`num_seq_date`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `product_version_fact_table_ibfk_3` FOREIGN KEY (`num_seq_nutriscore`) REFERENCES `nutriscore_dim_table` (`num_seq_nutiscore`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `product_version_fact_table_ibfk_3` FOREIGN KEY (`num_seq_nutriscore`) REFERENCES `nutriscore_dim_table` (`num_seq_nutriscore`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `product_version_fact_table_ibfk_4` FOREIGN KEY (`num_seq_pnns`) REFERENCES `pnns_dim_table` (`num_seq_pnns`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `product_version_fact_table_ibfk_5` FOREIGN KEY (`num_seq_produit`) REFERENCES `produit_dim_table` (`num_seq_produit`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
