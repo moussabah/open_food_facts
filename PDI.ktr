@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>PDI</name>
+    <name>off_products</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -583,23 +584,8 @@
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis table Produit_Version_PFacts</from>
-      <to>Database lookup produit</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>Extraction depuis table Produit_Version_date</from>
       <to>Insertion dans table Date</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Database lookup contributeur</from>
-      <to>Altération structure flux</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Altération structure flux</from>
-      <to>Insertion dans table Product_facts</to>
       <enabled>N</enabled>
     </hop>
     <hop>
@@ -613,11 +599,6 @@
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis table Produit_Version_PVFacts</from>
-      <to>Database lookup produit 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Database lookup produit 2</from>
       <to>lookup num_seq_date_modification</to>
       <enabled>Y</enabled>
@@ -625,11 +606,6 @@
     <hop>
       <from>lookup num_seq_date_modification</from>
       <to>Database lookup contributeur 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Altération structure flux 2</from>
-      <to>Insertion dans table Product_Version_Facts</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -643,11 +619,97 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Database lookup contributeur</from>
+      <to>Altération structure flux</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Extraction depuis table Produit_Version_PFacts</from>
+      <to>unique barcode</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>unique barcode</from>
+      <to>Database lookup produit</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Altération structure flux</from>
+      <to>count nombre_produit</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>count nombre_produit</from>
+      <to>Insertion dans table Product_facts</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Extraction depuis table Produit_Version_PVFacts</from>
+      <to>Database lookup produit 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Altération flux</from>
+      <to>Insertion dans table Product_Version_Facts</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Database lookup nutriscore</from>
-      <to>Altération structure flux 2</to>
+      <to>nombre de version</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>nombre de version</from>
+      <to>Altération flux</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name>Altération flux</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>num_seq_produit</name>
+      </field>
+      <field>
+        <name>num_seq_date_modification</name>
+      </field>
+      <field>
+        <name>num_seq_contributeur</name>
+      </field>
+      <field>
+        <name>num_seq_pnns</name>
+      </field>
+      <field>
+        <name>num_seq_nutriscore</name>
+      </field>
+      <field>
+        <name>nombre_versions</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1328</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Altération structure flux</name>
     <type>SelectValues</type>
@@ -680,56 +742,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
-      <yloc>368</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Altération structure flux 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>num_seq_produit</name>
-        <rename/>
-      </field>
-      <field>
-        <name>num_seq_date_modification</name>
-        <rename/>
-      </field>
-      <field>
-        <name>num_seq_contributeur</name>
-        <rename/>
-      </field>
-      <field>
-        <name>num_seq_pnns</name>
-        <rename/>
-      </field>
-      <field>
-        <name>num_seq_nutriscore</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1728</xloc>
-      <yloc>384</yloc>
+      <xloc>432</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -776,8 +790,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>528</yloc>
+      <xloc>432</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -824,8 +838,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1344</xloc>
-      <yloc>528</yloc>
+      <xloc>1072</xloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -878,8 +892,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1568</xloc>
-      <yloc>528</yloc>
+      <xloc>1184</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -910,12 +924,6 @@
         <condition>=</condition>
         <name2/>
       </key>
-      <key>
-        <name/>
-        <field>pnns2</field>
-        <condition>IS NOT NULL</condition>
-        <name2/>
-      </key>
       <value>
         <name>num_seq_pnns</name>
         <rename>num_seq_pnns</rename>
@@ -932,8 +940,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1472</xloc>
-      <yloc>384</yloc>
+      <xloc>1056</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -980,8 +988,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>528</yloc>
+      <xloc>224</xloc>
+      <yloc>400</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1028,8 +1036,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>528</yloc>
+      <xloc>784</xloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1174,7 +1182,7 @@ FROM base_bousse.OFF_2_pnns
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
+      <xloc>128</xloc>
       <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1524,7 +1532,7 @@ FROM base_bousse.OFF_2_version_produit
     </remotesteps>
     <GUI>
       <xloc>128</xloc>
-      <yloc>368</yloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1872,8 +1880,8 @@ FROM base_bousse.OFF_2_version_produit
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
-      <yloc>384</yloc>
+      <xloc>784</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2024,7 +2032,7 @@ ORDER BY nutriscore_lettre ASC;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
+      <xloc>784</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2156,7 +2164,7 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
+      <xloc>432</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2362,6 +2370,10 @@ FROM base_bousse.OFF_2_version_produit</sql>
         <column_name>num_seq_nutriscore</column_name>
         <stream_name>num_seq_nutriscore</stream_name>
       </field>
+      <field>
+        <column_name>nombre_versions</column_name>
+        <stream_name>nombre_versions</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -2372,8 +2384,8 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1824</xloc>
-      <yloc>512</yloc>
+      <xloc>1424</xloc>
+      <yloc>464</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2418,6 +2430,10 @@ FROM base_bousse.OFF_2_version_produit</sql>
         <column_name>num_seq_contributeur</column_name>
         <stream_name>num_seq_contributeur</stream_name>
       </field>
+      <field>
+        <column_name>nombre_produits</column_name>
+        <stream_name>nombre_produits</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -2428,8 +2444,8 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>720</xloc>
-      <yloc>528</yloc>
+      <xloc>576</xloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2480,8 +2496,51 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1120</xloc>
+      <xloc>1136</xloc>
       <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>count nombre_produit</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>Y</count_rows>
+    <count_field>nombre_produits</count_field>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>num_seq_produit</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>num_seq_date_creation</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>num_seq_contributeur</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2534,8 +2593,8 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>368</yloc>
+      <xloc>288</xloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2588,8 +2647,78 @@ FROM base_bousse.OFF_2_version_produit</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1232</xloc>
-      <yloc>384</yloc>
+      <xloc>928</xloc>
+      <yloc>368</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>nombre de version</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>Y</count_rows>
+    <count_field>nombre_versions</count_field>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>barcode</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1248</xloc>
+      <yloc>560</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>unique barcode</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field>nombre_produits</count_field>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>barcode</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>80</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
