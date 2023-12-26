@@ -1,6 +1,6 @@
 <Schema name="OFF">
   <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Produit">
-    <Hierarchy name="product_hierarchy" visible="true" hasAll="true" allMemberName="Tous produits" primaryKey="num_seq_produit">
+    <Hierarchy visible="true" hasAll="true" allMemberName="Tous produits" primaryKey="num_seq_produit">
       <Table name="produit_dim_table">
       </Table>
       <Level name="Produit" visible="true" column="barcode" nameColumn="product_name" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
@@ -10,7 +10,7 @@
     </Hierarchy>
   </Dimension>
   <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time" caption="Date Version">
-    <Hierarchy name="date_hierarchy" visible="true" hasAll="true" allMemberName="Tous Dates" primaryKey="num_seq_date">
+    <Hierarchy visible="true" hasAll="true" allMemberName="Tous Dates" primaryKey="num_seq_date">
       <Table name="date_dim_table">
       </Table>
       <Level name="Year" visible="true" column="year" nameColumn="year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
@@ -20,7 +20,7 @@
     </Hierarchy>
   </Dimension>
   <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Contributeur">
-    <Hierarchy name="contributeur_hierachy" visible="true" hasAll="true" allMemberName="Tous contributors" primaryKey="num_seq_contributeur">
+    <Hierarchy visible="true" hasAll="true" allMemberName="Tous contributors" primaryKey="num_seq_contributeur">
       <Table name="contributeur_dim_table">
       </Table>
       <Level name="Contributeur" visible="true" column="pseudo" nameColumn="pseudo" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
@@ -41,12 +41,10 @@
       </Hierarchy>
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="num_seq_nutriscore" highCardinality="false" name="Nutriscore">
-      <Hierarchy name="nutriscore_dim" visible="true" hasAll="true" allMemberName="Toutes nutriscore" primaryKey="num_seq_nutriscore">
+      <Hierarchy visible="true" hasAll="true" allMemberName="Toutes nutriscore" primaryKey="num_seq_nutriscore">
         <Table name="nutriscore_dim_table">
         </Table>
-        <Level name="Nutriscore" visible="true" column="nutriscore_lettre" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
-          <Property name="nutrition_score_fr" column="nutrition_score_fr" type="Numeric">
-          </Property>
+        <Level name="Nutriscore" visible="true" column="num_seq_nutriscore" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
