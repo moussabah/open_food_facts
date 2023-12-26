@@ -5,15 +5,17 @@
       </Table>
       <Level name="Produit" visible="true" column="barcode" nameColumn="product_name" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
       </Level>
+      <Level name="barcode" visible="true" column="barcode" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
     </Hierarchy>
   </Dimension>
   <Dimension type="TimeDimension" visible="true" highCardinality="false" name="Time" caption="Date Version">
     <Hierarchy name="date_hierarchy" visible="true" hasAll="true" allMemberName="Tous Dates" primaryKey="num_seq_date">
       <Table name="date_dim_table">
       </Table>
-      <Level name="Year" visible="true" column="year" nameColumn="year" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+      <Level name="Year" visible="true" column="year" nameColumn="year" type="Numeric" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
       </Level>
-      <Level name="Month" visible="true" column="month" nameColumn="month" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      <Level name="Month" visible="true" column="month" nameColumn="month" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
@@ -54,15 +56,15 @@
     </DimensionUsage>
     <DimensionUsage source="Time" name="Date_Modification" visible="true" foreignKey="num_seq_date_modification" highCardinality="false">
     </DimensionUsage>
-    <Measure name="Nombre de version par produit" column="nombre_de_version" datatype="Integer" aggregator="count">
+    <Measure name="Nombre de version par produit" column="nombre_versions" datatype="Integer" aggregator="sum">
     </Measure>
   </Cube>
   <Cube name="Product_Facts" visible="true" cache="true" enabled="true">
-    <Table name="nombre_produit_table">
+    <Table name="product_facts_table">
     </Table>
     <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="Time" name="Date_Creation" visible="true" foreignKey="date_creation" highCardinality="false">
+    <DimensionUsage source="Time" name="Date_Creation" visible="true" foreignKey="num_seq_date_creation" highCardinality="false">
     </DimensionUsage>
     <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit" highCardinality="false">
     </DimensionUsage>
