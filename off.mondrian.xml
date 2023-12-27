@@ -60,7 +60,7 @@
     </Measure>
   </Cube>
   <Cube name="Product_Facts" visible="true" cache="true" enabled="true">
-    <Table name="product_facts_table">
+    <Table name="product_facts_table" alias="">
     </Table>
     <DimensionUsage source="Contributeur" level="Contributeur" name="Contributeur" visible="true" foreignKey="num_seq_contributeur" highCardinality="false">
     </DimensionUsage>
@@ -68,7 +68,7 @@
     </DimensionUsage>
     <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="num_seq_produit" highCardinality="false">
     </DimensionUsage>
-    <Measure name="Nombre de produit" column="nombre_de_produit" aggregator="count">
+    <Measure name="Nombre de produit" column="nombre_produits" aggregator="sum">
     </Measure>
   </Cube>
 </Schema>
