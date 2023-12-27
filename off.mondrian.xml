@@ -9,7 +9,7 @@
       </Level>
     </Hierarchy>
   </Dimension>
-  <Dimension type="TimeDimension" visible="true" foreignKey="num_seq_date" highCardinality="false" name="Time" caption="Date Version">
+  <Dimension type="StandardDimension" visible="true" foreignKey="num_seq_date" highCardinality="false" name="Time" caption="Date Version">
     <Hierarchy visible="true" hasAll="true" allMemberName="Tous Dates" primaryKey="num_seq_date">
       <Table name="date_dim_table">
       </Table>
